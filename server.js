@@ -1,7 +1,19 @@
 const express = require('express'), path = require('path');
 const app = express();
+const ORIGIN = process.env.ALLOWED_ORIGIN || '*';
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use((req, res, next) => {
+  res.set({
+    'Access-Control-Allow-Origin': ORIGIN,
+    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type,x-api-key',
+  });
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
+  next();
+});
+app.get('/healthz', (req, res) => res.sendStatus('ok'));
 
 // ---- config (tune with real field data) ----
 const CFG = { critical: 70, rainSevere: 30, riseFast: 1.5, window: 15 * 60e3, roadCut: 80, key: process.env.AEGIS_KEY || '' };

@@ -4,14 +4,16 @@ import Dashboard from './Dashboard';
 import Twin from './Twin';
 import WhatIf from './WhatIf';
 import { National, Community, Arch } from './Views';
-import { COL, post } from './api';
+import { COL, post, API } from './api';
+
 const NAV = [['home', '🏠 Mission'], ['nat', '🌏 National'], ['sch', '🏫 School'], ['app', '📱 Community'], ['twin', '🧊 Twin & What-If'], ['arch', '🧠 Architecture']];
 const STAGES = [['Sense', 'data comes in'], ['Fuse', '2+ sources agree'], ['Verify', 'official confirms'], ['Decide', 'alert + actions'], ['Predict', 'what-if outlook']];
+
 export default function App() {
   const [st, setSt] = useState(null), [tab, setTab] = useState('home'), [sim, setSim] = useState(null), [simMin, setSimMin] = useState(null), [log, setLog] = useState([]);
   const prev = useRef({}), timers = useRef([]), stRef = useRef(null); stRef.current = st;
   useEffect(() => {
-    const f = () => fetch('/api/state').then(r => r.json()).then(setSt).catch(() => {});
+    const f = () => fetch(API + '/api/state').then(r => r.json()).then(setSt).catch(() => {});
     f(); const i = setInterval(f, 1500); return () => clearInterval(i);
   }, []);
   useEffect(() => {
@@ -48,6 +50,7 @@ export default function App() {
   if (sim && simMin != null) { const s = sim.steps[simMin]; lvl = s.level; risk = s.risk; tag = `SIMULATED · +${simMin} min`; }
   const alarm = risk === 'HIGH' || risk === 'CRITICAL', M = st?.risk.factors.find(f => f.name.startsWith('M'))?.v;
   const on = [!!st?.latest, !!M, !!st?.official, alarm, !!sim];
+  
   return (
     <div className="app">
       <aside>
