@@ -12,7 +12,7 @@ app.use((req, res, next) => {
   if (req.method === 'OPTIONS') return res.sendStatus(204);
   next();
 });
-app.get('/healthz', (req, res) => res.sendStatus('ok'));
+app.get('/healthz', (req, res) => res.send('ok'));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // ---- config (tune with real field data) ----
