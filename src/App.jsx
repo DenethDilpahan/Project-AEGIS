@@ -5,7 +5,7 @@ import Twin from './Twin';
 import WhatIf from './WhatIf';
 import { National, Community, Arch } from './Views';
 import { COL, post, API } from './api';
-
+//123
 const NAV = [['home', '🏠 Mission'], ['nat', '🌏 National'], ['sch', '🏫 School'], ['app', '📱 Community'], ['twin', '🧊 Twin & What-If'], ['arch', '🧠 Architecture']];
 const STAGES = [['Sense', 'data comes in'], ['Fuse', '2+ sources agree'], ['Verify', 'official confirms'], ['Decide', 'alert + actions'], ['Predict', 'what-if outlook']];
 
